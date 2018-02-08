@@ -43,11 +43,12 @@ fields = [{'name': 'url',
            'type': 'TEXT'},
          ]
 
-connection = urllib.request.urlopen('http://www.bbc.com/news/world-middle-east-42412729').read()
 
-parser = HTMLParser()
-parsed = parser.parse(connection,fields)
-print (parsed)      
+def ArticleURL(url):
+    connection = urllib.request.urlopen(url).read()
+    parser = HTMLParser()
+    parsed = parser.parse(connection,fields)
+    return parsed
 
 '''
 excludes = ['youtube.com', 'facebook.com', 'linkedin.com','twitter.com','flipboard.com','google.com', 'stumbleupon.com','itunes.apple.com','oath.com','flipboard.com','privacy.aol.com','apps.microsoft.com','tumblr.com','jp.','pinterest.com']

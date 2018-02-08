@@ -1,34 +1,45 @@
 from utils.config_manager import ConfigManager
 config_obj = ConfigManager.get_instance()
+config = config_obj.dataMap
 from auth import BasicAuth
 import urllib.request
 import os
+import json
 import requests
 import base64
 
-class ArticalPost(object):
-    def __init__(self,title,description,featurimg,status='publish'):
-        self.postsurl = config_obj.wp_posts
-        self.status = status
-        self.featurimg = featurimg
-        self.title = title
-        self.description = description
-        self.basic_auth = BasicAuth.auth
+class ArticlePost(object):
+    def __init__(self):
+        self.postsurl = config['wp_posts']
         self.reqsesion = requests.session()
+        self.basic_auth = BasicAuth.auth
 
-    def poster(self):
+    def postarticle(self,title,description,featurimg,status='publish'):
         header = {
                 'Content-Type' : 'application/json',
-                'Authorization': 'Basic {basic_auth}'.format(basic_auth=basic_auth)
+                'Authorization': 'Basic {basic_auth}'.format(basic_auth=self.basic_auth)
                 }
         article = {}
-        article['title'] = self.title
-        article['content'] = self.description 
-        article['status'] = self.status
-        article['featured_media'] = self.featurimg
+        article['title'] = title
+        article['content'] = description 
+        article['status'] = status
+        article['featured_media'] = featurimg
+        article['format'] = 'standard'
+        article['author'] = '1'
+        article['date'] = '2017-06-19T20:00:35'
        
-        print(article)
-        postartical = self.reqsesion.post(url=self.postsurl, headers=header, data=article)
-        
+        article=json.dumps(article)
+
+        postartical = self.reqsesion.post(
+            url=self.postsurl, 
+            headers=header, 
+            data=article,
+            auth=(config['wp_username'],config['wp_password'])
+            )
+
+        if postartical.status_code == 200:
+            return True
+        return False
+                
 
 
