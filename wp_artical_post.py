@@ -2,6 +2,7 @@ from utils.config_manager import ConfigManager
 config_obj = ConfigManager.get_instance()
 config = config_obj.dataMap
 from auth import BasicAuth
+import datetime
 import urllib.request
 import os
 import json
@@ -14,32 +15,37 @@ class ArticlePost(object):
         self.reqsesion = requests.session()
         self.basic_auth = BasicAuth.auth
 
-    def postarticle(self,title,description,featurimg,status='publish'):
+    def postarticle(self,title,categories,description,featurimg,url,status='publish'):
         header = {
                 'Content-Type' : 'application/json',
                 'Authorization': 'Basic {basic_auth}'.format(basic_auth=self.basic_auth)
                 }
         article = {}
+        article['date'] = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
         article['title'] = title
-        article['content'] = description 
+        article['content'] = { 
+            'rendered': '<p>%s</p>\n <h3><a href="%s">To Read More ...</a></h3>' % (description,url), 
+            'protected': False,
+            'raw': description
+         }
         article['status'] = status
         article['featured_media'] = featurimg
-        article['format'] = 'standard'
         article['author'] = '1'
-        article['date'] = '2017-06-19T20:00:35'
-       
+        article['categories'] = categories
+        
         article=json.dumps(article)
 
-        postartical = self.reqsesion.post(
+
+        postarticle = self.reqsesion.post(
             url=self.postsurl, 
             headers=header, 
             data=article,
             auth=(config['wp_username'],config['wp_password'])
             )
 
-        if postartical.status_code == 200:
+        print(postarticle.status_code)
+        print(json.loads(postarticle.text))
+        if postarticle.status_code == 200:
             return True
         return False
-                
-
-
+        
