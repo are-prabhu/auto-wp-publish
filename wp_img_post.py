@@ -72,7 +72,8 @@ class ImagePost(object):
             data = imgread, 
             auth=(config['wp_username'],config['wp_password'])
         )
-         
+
+        print(postimgreq.status_code)         
        
         if postimgreq.status_code == 201:
             os.remove('%s/downloads/%s' % (os.getcwd(),self.filename(imgurl)))

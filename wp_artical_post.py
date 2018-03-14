@@ -24,9 +24,10 @@ class ArticlePost(object):
         article['date'] = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
         article['title'] = title
         article['content'] = { 
-            'rendered': '<p>%s</p>\n <h3><a href="%s">To Read More ...</a></h3>' % (description,url), 
+            #'rendered': '<p>%s</p>\n <h3><a href="%s">To Read More ...</a></h3>' % (description,url), 
+            'raw': '%s <a href="%s">To Read More ...</a>' % (description,url),
             'protected': False,
-            'raw': description
+            'rendered': description + 'To Read More ...'
          }
         article['status'] = status
         article['featured_media'] = featurimg

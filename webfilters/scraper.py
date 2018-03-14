@@ -48,7 +48,10 @@ def ArticleURL(url):
     connection = urllib.request.urlopen(url).read()
     parser = HTMLParser()
     parsed = parser.parse(connection,fields)
+    print(parsed)
     return parsed
+
+ArticleURL("http://www.wpbeginner.com/wp-themes/how-to-remove-the-sidebar-in-wordpress/")
 
 '''
 excludes = ['youtube.com', 'facebook.com', 'linkedin.com','twitter.com','flipboard.com','google.com', 'stumbleupon.com','itunes.apple.com','oath.com','flipboard.com','privacy.aol.com','apps.microsoft.com','tumblr.com','jp.','pinterest.com']

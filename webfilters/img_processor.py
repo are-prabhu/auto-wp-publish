@@ -16,4 +16,5 @@ class Posters(object):
         imgid=ImagePost().postimg(self.scrape['thumbnail'])
         return ArticlePost().postarticle(self.scrape['title'],self.categorie,self.scrape['description'],imgid,self.url)
 
-#Posters('http://www.bbc.com/news/world-middle-east-42412729','1').post()
+#Posters('http://www.bbc.com/news/av/world-asia-43158243/world-s-longest-glass-bridge-visited-by-thousands-daily','1').post()
+Posters('https://fashionista.com/2015/02/most-influential-style-bloggers-2015','1').post()
