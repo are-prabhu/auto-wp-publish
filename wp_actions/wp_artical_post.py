@@ -1,7 +1,12 @@
+"""
+ wp_artical_post.py - get the ArticalPost class will post the artical to 
+ the wordpress..
+"""
+
 from utils.config_manager import ConfigManager
 config_obj = ConfigManager.get_instance()
 config = config_obj.dataMap
-from auth import BasicAuth
+from .auth import BasicAuth
 import datetime
 import urllib.request
 import os
@@ -23,19 +28,29 @@ class ArticlePost(object):
         article = {}
         article['date'] = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
         article['title'] = title
-        article['content'] = { 
+
+        if len(description.split(' ')) > 250:
+            article['content'] = { 
+            #'rendered': '<p>%s</p>\n <h3><a href="%s">To Read More ...</a></h3>' % (description,url), 
+            'raw':  description,
+            'protected': False,
+            'rendered': description 
+            }
+        else:
+            article['content'] = { 
             #'rendered': '<p>%s</p>\n <h3><a href="%s">To Read More ...</a></h3>' % (description,url), 
             'raw': '%s <a href="%s">To Read More ...</a>' % (description,url),
             'protected': False,
-            'rendered': description + 'To Read More ...'
-         }
+            'rendered': description + '...' + 'To Read More ...'
+            }
+
         article['status'] = status
         article['featured_media'] = featurimg
         article['author'] = '1'
         article['categories'] = categories
-        
+         
         article=json.dumps(article)
-
+        print (article)
 
         postarticle = self.reqsesion.post(
             url=self.postsurl, 

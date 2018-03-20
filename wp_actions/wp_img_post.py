@@ -1,7 +1,11 @@
+"""
+ wp_img_post.py -ImagePost class will post the image to 
+ the wordpress and return then post number.
+"""
 from utils.config_manager import ConfigManager
 config_obj = ConfigManager.get_instance()
 config = config_obj.dataMap
-from auth import BasicAuth 
+from .auth import BasicAuth 
 import urllib.request
 import json
 import os
@@ -54,7 +58,7 @@ class ImagePost(object):
         """
         try:
             urllib.request.urlretrieve(imgurl,'%s/downloads/%s' % (os.getcwd(),self.filename(imgurl)))
-        except Exceptation as err:
+        except Exception as err:
             print (err)
             return None
 
