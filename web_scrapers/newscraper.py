@@ -8,7 +8,7 @@ class Scraper:
     TODO: find better logic to remove nasty if loops 
     """
     @classmethod
-    def article(cls,url,description=False):
+    def article(cls,url,description):
         article = Article(url)
         article.download()
         article.parse()

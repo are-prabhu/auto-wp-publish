@@ -20,7 +20,7 @@ class ArticlePost(object):
         self.reqsesion = requests.session()
         self.basic_auth = BasicAuth.auth
 
-    def postarticle(self,title,categories,description,featurimg,url,status='publish'):
+    def postarticle(self,title,categories,status,description,featurimg,url):
         header = {
                 'Content-Type' : 'application/json',
                 'Authorization': 'Basic {basic_auth}'.format(basic_auth=self.basic_auth)
@@ -44,7 +44,7 @@ class ArticlePost(object):
             'rendered': description + '...' + 'To Read More ...'
             }
 
-        article['status'] = status
+        article['status'] = 'draft'
         article['featured_media'] = featurimg
         article['author'] = '1'
         article['categories'] = categories
