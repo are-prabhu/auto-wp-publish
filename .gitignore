@@ -1,0 +1,16 @@
+__pycache__
+*.pyc
+*.swp
+.DS_Store
+
+# to mark files as ignored by git
+*.ignore
+
+# env
+.python-version
+
+# ide
+.idea
+
+# pytest
+.cache/
