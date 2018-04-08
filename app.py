@@ -17,7 +17,13 @@ class Publish(MethodView):
             state=Posters(url,category,status,description=True).post()
         return state
 
+class Helper(MethodView):
+    def post(self):
+        return "<h1>/v1/artis/status/description(0/1)/catageory(6/7/5/7)/remoteurl</h1>"
+
 app.add_url_rule('/v1/articles/<string:status>/<int:description>/<int:category>/<path:url>', view_func=Publish.as_view(''),methods=['POST','GET'])
+app.add_url_rule('/', view_func=Helper.as_view(''),methods=['POST','GET'])
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
