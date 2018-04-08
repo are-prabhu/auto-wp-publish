@@ -10,7 +10,7 @@ from processor.img_processor import Posters
 app = Flask(__name__)
 
 class Publish(MethodView):
-    def post(self,description,category,url,status):
+    def get(self,description,category,url,status):
         if description == 1:
             state=Posters(url,category,status,description=False).post()
         elif description == 0:

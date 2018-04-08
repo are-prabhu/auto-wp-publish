@@ -50,7 +50,7 @@ class ArticlePost(object):
         article['categories'] = categories
          
         article=json.dumps(article)
-        print (article)
+        #print (article)
 
         postarticle = self.reqsesion.post(
             url=self.postsurl, 
@@ -59,9 +59,7 @@ class ArticlePost(object):
             auth=(config['wp_username'],config['wp_password'])
             )
 
-        print(postarticle.status_code)
-        print(json.loads(postarticle.text))
-        if postarticle.status_code == 200:
-            return True
-        return False
+        if postarticle.status_code == 200 or postarticle.status_code == 201:
+            return json.loads(postarticle.text)
+        return {'status': 'Failed to post article'}
         
