@@ -9,7 +9,7 @@ class Posters(object):
     def __init__(self,url,categorie,status,description):
         self.url = url
         self.categorie = categorie
-        self.status=status.upper()
+        self.status=status
         self.scrape = Scraper.article(self.url,description)
 
     def post(self):

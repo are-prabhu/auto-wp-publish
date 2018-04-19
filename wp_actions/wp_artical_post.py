@@ -29,22 +29,14 @@ class ArticlePost(object):
         article['date'] = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
         article['title'] = title
 
-        if len(description.split(' ')) > 250:
-            article['content'] = { 
+        article['content'] = { 
             #'rendered': '<p>%s</p>\n <h3><a href="%s">To Read More ...</a></h3>' % (description,url), 
             'raw':  description,
             'protected': False,
             'rendered': description 
             }
-        else:
-            article['content'] = { 
-            #'rendered': '<p>%s</p>\n <h3><a href="%s">To Read More ...</a></h3>' % (description,url), 
-            'raw': '%s <a href="%s">To Read More ...</a>' % (description,url),
-            'protected': False,
-            'rendered': description + '...' + 'To Read More ...'
-            }
 
-        article['status'] = 'draft'
+        article['status'] = status
         article['featured_media'] = featurimg
         article['author'] = '1'
         article['categories'] = categories
@@ -57,9 +49,10 @@ class ArticlePost(object):
             headers=header, 
             data=article,
             auth=(config['wp_username'],config['wp_password'])
-            )
+        )
 
+        print(postarticle.status_code)
         if postarticle.status_code == 200 or postarticle.status_code == 201:
             return json.loads(postarticle.text)
-        return {'status': 'Failed to post article'}
+        return str({'status': 'Failed to post article'})
         

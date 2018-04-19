@@ -15,7 +15,7 @@ class Publish(MethodView):
             state=Posters(url,category,status,description=False).post()
         elif description == 0:
             state=Posters(url,category,status,description=True).post()
-        return state
+        return str(state)
 
 
 def help():
@@ -27,5 +27,5 @@ app.add_url_rule('/', 'help', help)
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5260, debug=True)
 
