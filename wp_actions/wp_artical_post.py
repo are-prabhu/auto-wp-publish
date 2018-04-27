@@ -43,6 +43,9 @@ class ArticlePost(object):
          
         article=json.dumps(article)
         #print (article)
+        
+        if article['status'] == 'show':
+            return article
 
         postarticle = self.reqsesion.post(
             url=self.postsurl, 
