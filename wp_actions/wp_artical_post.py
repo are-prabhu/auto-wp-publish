@@ -21,6 +21,10 @@ class ArticlePost(object):
         self.basic_auth = BasicAuth.auth
 
     def postarticle(self,title,categories,status,description,featurimg,url):
+
+        if status == 'show':
+            return description
+
         header = {
                 'Content-Type' : 'application/json',
                 'Authorization': 'Basic {basic_auth}'.format(basic_auth=self.basic_auth)
@@ -44,8 +48,6 @@ class ArticlePost(object):
         article=json.dumps(article)
         #print (article)
         
-        if article['status'] == 'show':
-            return article
 
         postarticle = self.reqsesion.post(
             url=self.postsurl, 
