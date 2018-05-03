@@ -13,6 +13,10 @@ class Posters(object):
         self.scrape = Scraper.article(self.url,description)
 
     def post(self):
+        if self.status != 'show':
+            imgid=ImagePost().postimg(self.scrape['top_image'])
+        else:
+            imgid=1
         imgid=ImagePost().postimg(self.scrape['top_image'])
         return ArticlePost().postarticle(self.scrape['title'],self.categorie,self.status,self.scrape['description'],imgid,self.url)
 
